@@ -1,5 +1,6 @@
 package com.wantedpreonboardingbackend.jobs.entity;
 
+import com.wantedpreonboardingbackend.jobs.dto.NoticeRegisterRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,10 +11,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Notice {
 
     @Id
@@ -44,5 +47,15 @@ public class Notice {
         this.reward = reward;
         this.content = content;
         this.tech = tech;
+    }
+
+    public static Notice createNotice(NoticeRegisterRequestDto dto, Company company) {
+        return builder()
+                .company(company)
+                .position(dto.getPosition())
+                .reward(dto.getReward())
+                .content(dto.getContent())
+                .tech(dto.getTech())
+                .build();
     }
 }
