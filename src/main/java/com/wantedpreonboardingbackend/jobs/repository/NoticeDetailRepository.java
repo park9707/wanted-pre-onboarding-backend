@@ -1,5 +1,7 @@
 package com.wantedpreonboardingbackend.jobs.repository;
 
+import com.wantedpreonboardingbackend.jobs.dto.NoticeIdDto;
+import com.wantedpreonboardingbackend.jobs.entity.Company;
 import com.wantedpreonboardingbackend.jobs.entity.Notice;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,14 @@ public class NoticeDetailRepository {
                 "or c.name like concat('%', :search, '%') " +
                 "or c.region like concat('%', :search, '%') ", Notice.class)
                 .setParameter("search", search)
+                .getResultList();
+    }
+
+    public List<NoticeIdDto> findCompanyNotice(Company company, Long noticeId) {
+        return em.createQuery("select n.id from Notice n where n.company = :company " +
+                        "and n.id <> :noticeId", NoticeIdDto.class)
+                .setParameter("company", company)
+                .setParameter("noticeId", noticeId)
                 .getResultList();
     }
 }

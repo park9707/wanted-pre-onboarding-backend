@@ -1,6 +1,8 @@
 package com.wantedpreonboardingbackend.jobs.service;
 
+import com.wantedpreonboardingbackend.jobs.dto.NoticeDetailsResponseDto;
 import com.wantedpreonboardingbackend.jobs.dto.NoticeFindResponseDto;
+import com.wantedpreonboardingbackend.jobs.dto.NoticeIdDto;
 import com.wantedpreonboardingbackend.jobs.dto.NoticeRegisterRequestDto;
 import com.wantedpreonboardingbackend.jobs.dto.NoticeUpdateRequestDto;
 import com.wantedpreonboardingbackend.jobs.entity.Company;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -54,5 +55,14 @@ public class NoticeService {
         return noticeList.stream()
                 .map(notice -> new NoticeFindResponseDto(notice, notice.getCompany()))
                 .toList();
+    }
+
+    public NoticeDetailsResponseDto findNoticeDetails(Long noticeId) {
+        Notice notice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new IllegalArgumentException("Notice를 찾을 수 없습니다."));
+        Company company = notice.getCompany();
+        List<NoticeIdDto> noticeIds = noticeDetailRepository.findCompanyNotice(company, noticeId);
+
+        return new NoticeDetailsResponseDto(notice, company, noticeIds);
     }
 }

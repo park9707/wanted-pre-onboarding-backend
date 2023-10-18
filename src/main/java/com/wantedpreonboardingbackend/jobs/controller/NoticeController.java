@@ -1,5 +1,6 @@
 package com.wantedpreonboardingbackend.jobs.controller;
 
+import com.wantedpreonboardingbackend.jobs.dto.NoticeDetailsResponseDto;
 import com.wantedpreonboardingbackend.jobs.dto.NoticeFindResponseDto;
 import com.wantedpreonboardingbackend.jobs.dto.NoticeRegisterRequestDto;
 import com.wantedpreonboardingbackend.jobs.dto.NoticeUpdateRequestDto;
@@ -54,5 +55,10 @@ public class NoticeController {
     @GetMapping("/search")
     public List<NoticeFindResponseDto> searchNotice(@RequestParam String search) {
         return noticeService.searchNotice(search);
+    }
+
+    @GetMapping("/{noticeId}")
+    public NoticeDetailsResponseDto findNoticeDetail(@PathVariable Long noticeId) {
+        return noticeService.findNoticeDetails(noticeId);
     }
 }
