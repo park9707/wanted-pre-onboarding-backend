@@ -1,6 +1,7 @@
 package com.wantedpreonboardingbackend.jobs.service;
 
 import com.wantedpreonboardingbackend.jobs.dto.NoticeRegisterRequestDto;
+import com.wantedpreonboardingbackend.jobs.dto.NoticeUpdateRequestDto;
 import com.wantedpreonboardingbackend.jobs.entity.Company;
 import com.wantedpreonboardingbackend.jobs.entity.Notice;
 import com.wantedpreonboardingbackend.jobs.repository.CompanyRepository;
@@ -23,5 +24,11 @@ public class NoticeService {
 
         Notice notice = Notice.createNotice(dto, company);
         return noticeRepository.save(notice).getId();
+    }
+
+    public Notice updateNotice(NoticeUpdateRequestDto dto) {
+        Notice notice = noticeRepository.findById(dto.getNoticeId())
+                .orElseThrow(() -> new IllegalArgumentException("Notice를 찾을 수 없습니다."));
+        return notice.updateNotice(dto);
     }
 }

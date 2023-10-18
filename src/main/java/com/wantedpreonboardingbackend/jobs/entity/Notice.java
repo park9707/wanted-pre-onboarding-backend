@@ -1,6 +1,7 @@
 package com.wantedpreonboardingbackend.jobs.entity;
 
 import com.wantedpreonboardingbackend.jobs.dto.NoticeRegisterRequestDto;
+import com.wantedpreonboardingbackend.jobs.dto.NoticeUpdateRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -57,5 +58,13 @@ public class Notice {
                 .content(dto.getContent())
                 .tech(dto.getTech())
                 .build();
+    }
+
+    public Notice updateNotice(NoticeUpdateRequestDto dto) {
+        this.position = dto.getPosition();
+        this.reward = dto.getReward();
+        this.content = dto.getContent();
+        this.tech = dto.getTech();
+        return this;
     }
 }
