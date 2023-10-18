@@ -23,18 +23,19 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/register")
     public Long registerNotice(@RequestBody NoticeRegisterRequestDto dto) {
         return noticeService.registerNotice(dto);
     }
 
-    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/update")
     public Notice updateNotice(@RequestBody NoticeUpdateRequestDto dto) {
         return noticeService.updateNotice(dto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("{noticeId}")
+    @DeleteMapping("/{noticeId}")
     public void deleteNotice(@PathVariable Long noticeId) {
         noticeService.deleteNotice(noticeId);
     }
