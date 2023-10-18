@@ -31,4 +31,8 @@ public class NoticeService {
                 .orElseThrow(() -> new IllegalArgumentException("Notice를 찾을 수 없습니다."));
         return notice.updateNotice(dto);
     }
+
+    public void deleteNotice(Long noticeId) {
+        noticeRepository.deleteById(noticeId);
+    }
 }
